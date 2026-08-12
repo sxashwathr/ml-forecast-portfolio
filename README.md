@@ -44,19 +44,19 @@ pipeline on any machine reproduces the same numbers.
 ```
 ml-forecast-portfolio/
 ├── data/
-│   └── data_loader.py       # Pulls prices, computes return/volatility/momentum features
+│   └── data_loader.py       
 ├── models/
-│   └── return_predictor.py  # Ridge regression, time-based split, per-ticker forecasts
+│   └── return_predictor.py  
 ├── optimization/
-│   └── optimizer.py         # SLSQP max-Sharpe optimizer + efficient frontier
+│   └── optimizer.py        
 ├── simulation/
-│   └── monte_carlo.py       # Bootstrapped Monte Carlo simulation, VaR, Expected Shortfall
+│   └── monte_carlo.py       
 ├── backtest/
-│   └── backtest.py          # Walk-forward backtest: equal-weight vs. naive-mean vs. ML
-├── app.py                   # Streamlit dashboard
+│   └── backtest.py          
+├── app.py                   
 ├── requirements.txt
 ├── README.md
-└── EXPLAINED.md             # Plain-English walkthrough of the whole project
+└── EXPLAINED.md            
 ```
 
 Each script also caches its output (CSVs and PNGs, alongside the script) so
