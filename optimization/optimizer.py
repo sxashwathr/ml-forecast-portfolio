@@ -199,6 +199,23 @@ def compute_efficient_frontier(mu, cov, n_points=50):
     asset to the highest-return asset) and, for each, find the minimum-risk
     portfolio. Returns a DataFrame describing the frontier plus the
     weights at each point.
+
+    WHY we filter down to the "upper" branch before returning: minimizing
+    volatility for a FIXED target return produces a full parabola-shaped
+    curve in risk/return space -- for very low target returns, achieving
+    them exactly can actually require MORE risk than the minimum-variance
+    portfolio needs (imagine being forced to hold a low-return, high-risk
+    asset just to hit a low target exactly). That lower branch is real
+    output of the math, but it's not "efficient" by the standard
+    definition -- a rational investor would never accept its risk level
+    for that little return, since the minimum-variance portfolio alone
+    offers less risk AND more return. Keeping only points at or above the
+    global-minimum-variance portfolio's return is what makes this
+    genuinely "the efficient frontier" rather than the full minimum-
+    variance curve, and it matters beyond the plot: app.py maps a
+    risk-tolerance slider onto the nearest point on this frontier by
+    volatility alone, and without this filter it could silently hand back
+    a dominated, worse-than-necessary portfolio.
     """
     target_returns = np.linspace(mu.min(), mu.max(), n_points)
 
@@ -211,7 +228,11 @@ def compute_efficient_frontier(mu, cov, n_points=50):
         rows.append({"target_return": target, "return": ret, "volatility": vol, "sharpe": sharpe,
                       **{f"weight_{t}": w for t, w in zip(mu.index, weights)}})
 
-    return pd.DataFrame(rows)
+    frontier = pd.DataFrame(rows)
+    min_variance_idx = frontier["volatility"].idxmin()
+    min_variance_return = frontier.loc[min_variance_idx, "return"]
+    efficient_frontier = frontier[frontier["return"] >= min_variance_return].sort_values("volatility").reset_index(drop=True)
+    return efficient_frontier
 
 
 def plot_efficient_frontier(frontier_df, mu, cov, max_sharpe_weights, save_path=PLOT_PATH):
