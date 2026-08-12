@@ -1,0 +1,9 @@
+,value
+starting_value,10000.0
+median_terminal_value,11454.892483811285
+mean_terminal_return,0.17080129937988894
+VaR_95,0.2090955115841174
+expected_shortfall_95,0.2791699263445669
+probability_of_loss_1yr,0.2752
+best_case_return,1.5929888229513227
+worst_case_return,-0.5179073282160234
