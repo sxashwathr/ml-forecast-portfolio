@@ -1,0 +1,13 @@
+# Pinned to exact versions so this project runs identically on any machine --
+# combined with the fixed random seed (42) used everywhere randomness occurs,
+# this is what makes the results in this repo reproducible rather than "it
+# worked when I ran it."
+
+yfinance==1.5.2        # data_loader.py -- pulls historical price data from Yahoo Finance
+pandas==3.0.5           # every module -- tabular data (prices, features, returns, weights)
+numpy==2.5.2             # every module -- numerical arrays, random sampling in monte_carlo.py
+scikit-learn==1.9.0      # return_predictor.py -- Ridge regression, scaling, train/test tooling
+scipy==1.18.0            # optimizer.py -- SLSQP constrained optimization
+matplotlib==3.11.1       # optimizer.py, monte_carlo.py, backtest.py -- static plots (frontier, fan chart, comparison)
+streamlit==1.61.1        # app.py -- interactive dashboard
+plotly==6.9.0            # app.py -- interactive charts inside the dashboard
